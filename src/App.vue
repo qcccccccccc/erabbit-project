@@ -1,30 +1,33 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+<!-- 1.使用根模块state的数据 -->
+  <p>{{ $store.state.username }}</p>
+  <!--2. 使用根模块getters的数据 -->
+  <!-- <p>{{ $store.getters.newName }}</p> -->
+  <p>{{ $store.getters['newName'] }}</p>
+  <button @click="mutationsFn">改变名字</button>
 </template>
-
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import { useStore } from 'vuex'
+export default {
+  name: 'App',
+  setup () {
+    // <!-- 1.使用根模块state的数据 -->
+    const store = useStore()
+    console.log(store.state.username)
+    // 2.使用根模块getters的数据
+    console.log(store.getters.newName)
+    // 3.提交根模块mutation的数据
+    // const changeName = () => {
+    //   store.commit('updateName')
+    // }
+    // 4.调用根模块action函数
+    const mutationsFn = () => {
+      store.dispatch('updateName')
     }
+    return { mutationsFn }
+    // return { changeName }
   }
 }
+</script>
+<style lang="less">
 </style>
